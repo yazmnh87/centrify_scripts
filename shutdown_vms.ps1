@@ -1,9 +1,9 @@
 ﻿
 function shutoffvms(){
-
+$authToken = 'Basic YmlsbDpHb2xmYXoxMjM0ISE='
 
 $headers = @{
-    Authorization= 'Basic YmlsbDpHb2xmYXoxMjM0ISE='
+    Authorization= $authToken
 }
 
 $res = Invoke-WebRequest -Method 'GET' -Uri "http://127.0.0.1:8697/api/vms" -Headers $headers
@@ -20,7 +20,7 @@ Date: Mon, 11 Oct 2021 19:27:14 GMT
 $test = $res.RawContent.Substring(158) | Out-String | ConvertFrom-Json
 
 $headers1 = @{
-    Authorization= 'Basic YmlsbDpHb2xmYXoxMjM0ISE='
+    Authorization= $authToken
 }
 
 
@@ -38,11 +38,11 @@ foreach($r in $test){
 
     $header2 = @{
             "Accept"="application/json"
-            "Authorization"= 'Basic YmlsbDpHb2xmYXoxMjM0ISE='
+            "Authorization"= $authToken
             "Content-Type"="application/vnd.vmware.vmw.rest-v1+json"
             } 
 
-    
+        
         Invoke-WebRequest -Method 'PUT' -Uri "http://127.0.0.1:8697/api/vms/$id/power" -Headers $header2 -Body "suspend"
     }
 
